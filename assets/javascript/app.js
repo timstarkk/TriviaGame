@@ -1,0 +1,188 @@
+const game = {
+    number: 20,
+    reloadNumber: 0,
+    intervalId: 0,
+    reloadInterval: 0,
+    chosen: "",
+    question: "",
+    correctAnswer: "",
+    wrongOne: "",
+    wrongTwo: "",
+    wrongThree: "",
+    correctAnswers: 0,
+    wrongAnswers: 0,
+    unanswered: 0,
+
+    questions: [
+        {
+            name: "one",
+            question: 'What color is the sky?',
+            answer: 'blue',
+            wrongAnswer1: 'green',
+            wrongAnswer2: 'taco',
+            wrongAnswer3: 'of course not',
+        },
+        {
+            name: "two",
+            question: 'What color is grass, typically?',
+            answer: 'green',
+            wrongAnswer1: 'red',
+            wrongAnswer2: 'yes',
+            wrongAnswer3: 'what the hell',
+        }
+    ],
+
+    shuffleQuestions: function (array) {
+        let i = 0;
+        let j = 0;
+        let temp = null;
+        for (i = array.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+    },
+
+    setScreen: function () {
+        game.number = 20;
+        game.question = game.questions[0]
+        game.correctAnswer = game.question.answer;
+        wrongOne = game.question.wrongAnswer1;
+        wrongTwo = game.question.wrongAnswer2;
+        wrongThree = game.question.wrongAnswer3;
+        $('#show-number').text(`Time remaining: 20`)
+        $(`#start`).addClass('hidden');
+        $(`.show`).removeClass('hidden');
+        $(`#question`).text(`${game.question.question}`);
+        $(`#one`).text(`${wrongOne}`);
+        $(`#two`).text(`${game.correctAnswer}`);
+        $(`#three`).text(`${wrongTwo}`);
+        $(`#four`).text(`${wrongThree}`);
+    },
+
+    start: function () {
+        game.intervalId = setInterval(game.decrement, 1000);
+    },
+
+    decrement: function () {
+        game.number--;
+        $("#show-number").html(`Time remaining: ${game.number}`);
+
+        if (game.number === 0) {
+            $('#show-number').text('Out of Time!');
+            game.unanswered++;
+            game.questions.shift();
+            if (game.questions.length > 0) {
+                $('.answerButton').addClass('hidden');
+                $('#question').addClass('hidden');
+                game.reloadNumber = 3;
+                game.stop();
+                game.startTimer();
+            } else {
+                $('.answerButton').addClass('hidden');
+                $('#question').addClass('hidden');
+                game.reloadNumber = 3;
+                game.stop();
+                game.startTimer();
+            }
+        };
+    },
+
+    startTimer: function () {
+        game.reloadInterval = setInterval(game.reloadDecrement, 1000);
+    },
+
+    reloadDecrement: function () {
+        game.reloadNumber--;
+        if (game.questions.length > 0) {
+            if (game.reloadNumber === 0) {
+                game.setScreen();
+                game.start();
+            };
+        } else {
+            if (game.reloadNumber === 0) {
+                game.finalScreen();
+            };
+        }
+
+    },
+
+    checkAnswer: function (answer) {
+        let buttonId = answer.id
+
+        if (game.questions.length > 0) {
+            if ($(`#${buttonId}`).text() === game.correctAnswer) {
+                $('#show-number').text('Correct!');
+                game.correctAnswers++;
+                game.questions.shift();
+                if (game.questions.length > 0) {
+                    $('.answerButton').addClass('hidden');
+                    $('#question').addClass('hidden');
+                    game.reloadNumber = 3;
+                    game.stop();
+                    game.startTimer();
+                } else {
+                    $('.answerButton').addClass('hidden');
+                    $('#question').addClass('hidden');
+                    game.reloadNumber = 3;
+                    game.stop();
+                    game.startTimer();
+                };
+            } else {
+                $('#show-number').text('Wrong!');
+                game.wrongAnswers++;
+                game.questions.shift();
+                if (game.questions.length > 0) {
+                    $('.answerButton').addClass('hidden');
+                    $('#question').html(`The Correct Answer was ${game.correctAnswer}`);
+                    $('#question').append(`<br>gif`);
+                    game.reloadNumber = 3;
+                    game.stop();
+                    game.startTimer();
+                } else {
+                    $('.answerButton').addClass('hidden');
+                    $('#question').addClass('hidden');
+                    game.reloadNumber = 3;
+                    game.stop();
+                    game.startTimer();
+                };
+            };
+        }
+    },
+
+    finalScreen: function () {
+        $('#startCon').text('GAME OVER');
+        $('#show-number').html(`<h5>correct answers: ${game.correctAnswers}<br>
+            incorrect answers: ${game.wrongAnswers}<br>unanswered questions: ${game.unanswered}</h5>`);
+        $('#question').addClass('hidden');
+        $('#again').removeClass('hidden');
+        $('#again').addClass('moveUp');
+        $('#question').html(``);
+        $('.answerButton').addClass('hidden');
+
+    },
+
+    stop: function () {
+        clearInterval(game.intervalId);
+    },
+}
+
+$(document).ready(function () {
+    game.shuffleQuestions(game.questions);
+});
+
+$("#stop").on("click", game.stop);
+
+$("#start").on("click", function () {
+    game.setScreen();
+    game.start();
+});
+
+$(".answerButton").on("click", function (e) {
+    game.checkAnswer(this);
+})
+
+$("#again").on("click", function () {
+    console.log('play again');
+})
