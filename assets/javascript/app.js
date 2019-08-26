@@ -24,11 +24,59 @@ const game = {
         },
         {
             name: "two",
-            question: 'What color is grass, typically?',
-            answer: 'green',
-            wrongAnswer1: 'red',
-            wrongAnswer2: 'yes',
-            wrongAnswer3: 'what the hell',
+            question: 'In what year was the first Macintosh released?',
+            answer: '1984',
+            wrongAnswer1: '1995',
+            wrongAnswer2: '2001',
+            wrongAnswer3: '1976',
+        },
+        {
+            name: "three",
+            question: 'What is the Apple Inc. stock ticker?',
+            answer: 'AAPL',
+            wrongAnswer1: 'APLE',
+            wrongAnswer2: 'APPL',
+            wrongAnswer3: 'IMAC',
+        },
+        {
+            name: "four",
+            question: "What famous scientist was featured on Apple's first company logo?",
+            answer: 'Isaac Newtown',
+            wrongAnswer1: 'Albert Einstein',
+            wrongAnswer2: 'Nikola Tesla',
+            wrongAnswer3: 'Ben Franklin',
+        },
+        {
+            name: "five",
+            question: 'Apple originally had three founders, what was the name of the third founder?',
+            answer: 'Ronald Wayne',
+            wrongAnswer1: 'Bill Gates',
+            wrongAnswer2: 'Jeff Bezos',
+            wrongAnswer3: 'Douglas Engelbart',
+        },
+        {
+            name: "six",
+            question: 'How much did a share of Apple Inc. stock cost at IPO?',
+            answer: '$22',
+            wrongAnswer1: '$98',
+            wrongAnswer2: '$6',
+            wrongAnswer3: '$33',
+        },
+        {
+            name: "seven",
+            question: "What is the name of Apple's current CEO?",
+            answer: 'Tim Cook',
+            wrongAnswer1: 'Tim Stark',
+            wrongAnswer2: 'Bill Gates',
+            wrongAnswer3: 'Peter Thiel',
+        },
+        {
+            name: "eight",
+            question: 'What year was the Ipod released?',
+            answer: '2001',
+            wrongAnswer1: '1999',
+            wrongAnswer2: '2003',
+            wrongAnswer3: '1991',
         }
     ],
 
@@ -98,17 +146,21 @@ const game = {
 
     startTimer: function () {
         game.reloadInterval = setInterval(game.reloadDecrement, 1000);
+        game.reloadNumber = 3;
     },
 
     reloadDecrement: function () {
+        console.log(game.reloadNumber)
         game.reloadNumber--;
         if (game.questions.length > 0) {
             if (game.reloadNumber === 0) {
+                game.stop();
                 game.setScreen();
                 game.start();
             };
         } else {
             if (game.reloadNumber === 0) {
+                game.stop();
                 game.finalScreen();
             };
         }
@@ -125,13 +177,13 @@ const game = {
                 game.questions.shift();
                 if (game.questions.length > 0) {
                     $('.answerButton').addClass('hidden');
-                    $('#show-number').html(`gif`);
+                    $('#show-number').html(`<img src="assets/images/winGif.gif" alt="Steve Jobs" class="gifSize">`);
                     game.reloadNumber = 4;
                     game.stop();
                     game.startTimer();
                 } else {
                     $('.answerButton').addClass('hidden');
-                    $('#show-number').html(`gif`);
+                    $('#show-number').html(`<img src="assets/images/winGif.gif" alt="Steve Jobs" class="gifSize">`);
                     game.reloadNumber = 4;
                     game.stop();
                     game.startTimer();
@@ -143,14 +195,14 @@ const game = {
                 if (game.questions.length > 0) {
                     $('.answerButton').addClass('hidden');
                     $('#question').append(`<br>The Correct Answer was ${game.correctAnswer}`);
-                    $('#show-number').html(`gif`);
+                    $('#show-number').html(`<img src="assets/images/loseGif.gif" alt="Steve Jobs" class="gifSize">`);
                     game.reloadNumber = 3;
                     game.stop();
                     game.startTimer();
                 } else {
                     $('#question').append(`<br>The Correct Answer was ${game.correctAnswer}`);
                     $('.answerButton').addClass('hidden');
-                    $('#show-number').html(`gif`);
+                    $('#show-number').html(`<img src="assets/images/loseGif.gif" alt="Steve Jobs" class="gifSize">`);
                     game.reloadNumber = 3;
                     game.stop();
                     game.startTimer();
@@ -172,6 +224,7 @@ const game = {
 
     stop: function () {
         clearInterval(game.intervalId);
+        clearInterval(game.reloadInterval);
     },
 
     reset: function () {
@@ -219,6 +272,8 @@ $(document).ready(function () {
 $("#stop").on("click", game.stop);
 
 $("#start").on("click", function () {
+    var audio = new Audio("assets/chime.mp3")
+    audio.play();
     game.setScreen();
     game.start();
 });
@@ -230,5 +285,7 @@ $(".answerButton").on("click", function (e) {
 $("#again").on("click", function () {
     $('#again').addClass('hidden');
     $('#show-number').removeClass('hidden');
+    var audio = new Audio("assets/chime.mp3")
+    audio.play();
     game.reset();
 })
