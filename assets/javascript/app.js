@@ -48,7 +48,7 @@ const game = {
         },
         {
             name: "five",
-            question: 'Apple originally had three founders, what was the name of the third founder?',
+            question: 'Apple originally had three founders. What is the name of the third founder?',
             answer: 'Ronald Wayne',
             wrongAnswer1: 'Bill Gates',
             wrongAnswer2: 'Jeff Bezos',
