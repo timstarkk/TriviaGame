@@ -101,7 +101,7 @@ const game = {
         wrongThree = game.question.wrongAnswer3;
         let questionOrder = ['one', 'two', 'three', 'four']
 
-        $('#show-number').text(`Time remaining: 20`)
+        $('#show-number').text(`Time remaining: 20s`)
         $(`#startCon`).addClass('hidden');
         $(`.show`).removeClass('hidden');
         $(`#question`).text(`${game.question.question}`);
@@ -122,7 +122,7 @@ const game = {
 
     decrement: function () {
         game.number--;
-        $("#show-number").html(`Time remaining: ${game.number}`);
+        $("#show-number").html(`Time remaining: ${game.number}s`);
 
         if (game.number === 0) {
             $('#question').text('Out of Time!');
