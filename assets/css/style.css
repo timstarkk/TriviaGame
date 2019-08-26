@@ -1,5 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:500&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif; 
+}
+
+#headerRow {
+    background: #2b2a28;
+    margin-bottom: 40px;
+}
+
+.titleCont {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.titleCol {
+    text-align:center;
+}
+
+.headerBackground {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#appleLogo {
+    max-height: 150px;
+}
+
 .main {
     height: 500px;
+    background: white;
 }
 
 .center {
@@ -10,6 +43,14 @@
 
 .hidden {
     visibility: hidden;
+    height: 0px;
+    max-height: 0px;
+}
+
+#question {
+    display: flex;
+    align-items: center;
+    text-align: center;
 }
 
 #again {
@@ -19,4 +60,31 @@
 .moveUp {
     position: relative;
     bottom: 200px;
+}
+
+.buttonDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-primary {
+    margin-bottom: 5px;
+    border-radius: 12px;
+    background: #2870c9;
+    border-color: #2870c9;
+    height: 50px;
+    width: 150px;
+}
+
+.btn-primary:hover{
+    background: #045799;
+    border-color: #045799;
+}
+
+.btn-secondary {
+    margin-bottom: 5px;
+    border-radius: 12px;
+    height: 50px;
+    width: 150px;
 }

@@ -1,6 +1,6 @@
 const game = {
     number: 20,
-    reloadNumber: 0,
+    reloadNumber: 4,
     intervalId: 0,
     reloadInterval: 0,
     chosen: "",
@@ -52,7 +52,7 @@ const game = {
         wrongTwo = game.question.wrongAnswer2;
         wrongThree = game.question.wrongAnswer3;
         $('#show-number').text(`Time remaining: 20`)
-        $(`#start`).addClass('hidden');
+        $(`#startCon`).addClass('hidden');
         $(`.show`).removeClass('hidden');
         $(`#question`).text(`${game.question.question}`);
         $(`#one`).text(`${wrongOne}`);
@@ -70,19 +70,19 @@ const game = {
         $("#show-number").html(`Time remaining: ${game.number}`);
 
         if (game.number === 0) {
-            $('#show-number').text('Out of Time!');
+            $('#question').text('Out of Time!');
             game.unanswered++;
             game.questions.shift();
             if (game.questions.length > 0) {
                 $('.answerButton').addClass('hidden');
                 $('#question').addClass('hidden');
-                game.reloadNumber = 3;
+                game.reloadNumber = 4;
                 game.stop();
                 game.startTimer();
             } else {
                 $('.answerButton').addClass('hidden');
                 $('#question').addClass('hidden');
-                game.reloadNumber = 3;
+                game.reloadNumber = 4;
                 game.stop();
                 game.startTimer();
             }
@@ -113,36 +113,37 @@ const game = {
 
         if (game.questions.length > 0) {
             if ($(`#${buttonId}`).text() === game.correctAnswer) {
-                $('#show-number').text('Correct!');
+                $('#question').text('Correct!');
                 game.correctAnswers++;
                 game.questions.shift();
                 if (game.questions.length > 0) {
                     $('.answerButton').addClass('hidden');
-                    $('#question').addClass('hidden');
-                    game.reloadNumber = 3;
+                    $('#show-number').html(`gif`);
+                    game.reloadNumber = 4;
                     game.stop();
                     game.startTimer();
                 } else {
                     $('.answerButton').addClass('hidden');
-                    $('#question').addClass('hidden');
-                    game.reloadNumber = 3;
+                    $('#show-number').html(`gif`);
+                    game.reloadNumber = 4;
                     game.stop();
                     game.startTimer();
                 };
             } else {
-                $('#show-number').text('Wrong!');
+                $('#question').html('Wrong!');
                 game.wrongAnswers++;
                 game.questions.shift();
                 if (game.questions.length > 0) {
                     $('.answerButton').addClass('hidden');
-                    $('#question').html(`The Correct Answer was ${game.correctAnswer}`);
-                    $('#question').append(`<br>gif`);
+                    $('#question').append(`<br>The Correct Answer was ${game.correctAnswer}`);
+                    $('#show-number').html(`gif`);
                     game.reloadNumber = 3;
                     game.stop();
                     game.startTimer();
                 } else {
+                    $('#question').append(`<br>The Correct Answer was ${game.correctAnswer}`);
                     $('.answerButton').addClass('hidden');
-                    $('#question').addClass('hidden');
+                    $('#show-number').html(`gif`);
                     game.reloadNumber = 3;
                     game.stop();
                     game.startTimer();
@@ -153,18 +154,54 @@ const game = {
 
     finalScreen: function () {
         $('#startCon').text('GAME OVER');
-        $('#show-number').html(`<h5>correct answers: ${game.correctAnswers}<br>
+        $('#question').html(`<h5>correct answers: ${game.correctAnswers}<br>
             incorrect answers: ${game.wrongAnswers}<br>unanswered questions: ${game.unanswered}</h5>`);
-        $('#question').addClass('hidden');
+        $('#show-number').addClass('hidden');
         $('#again').removeClass('hidden');
         $('#again').addClass('moveUp');
-        $('#question').html(``);
         $('.answerButton').addClass('hidden');
 
     },
 
     stop: function () {
         clearInterval(game.intervalId);
+    },
+
+    reset: function () {
+        game.number = 20,
+            game.reloadNumber = 0,
+            game.intervalId = 0,
+            game.reloadInterval = 0,
+            game.chosen = "",
+            game.question = "",
+            game.correctAnswer = "",
+            game.wrongOne = "",
+            game.wrongTwo = "",
+            game.wrongThree = "",
+            game.correctAnswers = 0,
+            game.wrongAnswers = 0,
+            game.unanswered = 0,
+            game.questions = [
+                {
+                    name: "one",
+                    question: 'What color is the sky?',
+                    answer: 'blue',
+                    wrongAnswer1: 'green',
+                    wrongAnswer2: 'taco',
+                    wrongAnswer3: 'of course not',
+                },
+                {
+                    name: "two",
+                    question: 'What color is grass, typically?',
+                    answer: 'green',
+                    wrongAnswer1: 'red',
+                    wrongAnswer2: 'yes',
+                    wrongAnswer3: 'what the hell',
+                }
+            ],
+
+            game.setScreen();
+        game.start();
     },
 }
 
@@ -184,5 +221,7 @@ $(".answerButton").on("click", function (e) {
 })
 
 $("#again").on("click", function () {
-    console.log('play again');
+    $('#again').addClass('hidden');
+    $('#show-number').removeClass('hidden');
+    game.reset();
 })

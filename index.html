@@ -12,7 +12,7 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <style>
-        .row {
+        /* .row {
             border: 2px solid red;
             margin-top: 5px;
             margin-bottom: 5px;
@@ -28,32 +28,41 @@
             border: 2px solid blue;
             margin-top: 5px;
             margin-bottom: 5px;
-        }
+        } */
     </style>
 </head>
 
 <body class="container-fluid">
 
-    <div class="row">
+    <div class="row" id="headerRow">
         <div class="container header">
             <div class="row headerBackground">
-
+                <img src="assets/images/appleLogo.png" alt="Apple Inc. Logo" id="appleLogo">
             </div>
         </div>
     </div>
     <div class="row">
         <div class="container">
             <div class="row main" id="">
-                <div class="col-12 center" id="startCon">
-                    <button id="start">start</button><br>
+                <div class="container center" id="">
+                    <div class="row titleCont">
+                        <h1 class="" id="titleCol">Apple Inc. Trivia</h1>
+                        <div class="col-12 center" id="startCon">
+                            <button class="btn btn-primary col-2" id="start">start</button><br>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-12 center" id="show-number"></div><br>
                 <div class="col-12 show center hidden" id="question"></div></br>
-                <button class="col-12 show answerButton hidden" id="one">answer1</button></br>
-                <button class="col-12 show answerButton hidden" id="two">answer2</button></br>
-                <button class="col-12 show answerButton hidden" id="three">answer3</button></br>
-                <button class="col-12 show answerButton hidden" id="four">answer4</button></br>
-                <button class="col-12 hidden" id="again">PLAY AGAIN</button>
+                <div class="col-12 center" id="show-number"></div><br>
+                <div class="col-12 buttonDiv"><button class="show answerButton hidden btn btn-secondary"
+                        id="one">answer1</button></br></div>
+                <div class="col-12 buttonDiv"><button class="show answerButton hidden btn btn-secondary"
+                        id="two">answer2</button></br></div>
+                <div class="col-12 buttonDiv"><button class="show answerButton hidden btn btn-secondary"
+                        id="three">answer3</button></br></div>
+                <div class="col-12 buttonDiv"><button class="show answerButton hidden btn btn-secondary"
+                        id="four">answer4</button></br></div>
+                <div class="col-12 buttonDiv"><button class="hidden btn-primary" id="again">PLAY AGAIN</button></div>
             </div>
         </div>
     </div>
