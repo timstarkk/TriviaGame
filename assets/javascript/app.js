@@ -16,11 +16,11 @@ const game = {
     questions: [
         {
             name: "one",
-            question: 'What color is the sky?',
-            answer: 'blue',
-            wrongAnswer1: 'green',
-            wrongAnswer2: 'taco',
-            wrongAnswer3: 'of course not',
+            question: 'When was the first Apple computer released?',
+            answer: '1976',
+            wrongAnswer1: '1991',
+            wrongAnswer2: '1973',
+            wrongAnswer3: '1984',
         },
         {
             name: "two",
@@ -32,7 +32,7 @@ const game = {
         }
     ],
 
-    shuffleQuestions: function (array) {
+    shuffleArray: function (array) {
         let i = 0;
         let j = 0;
         let temp = null;
@@ -51,14 +51,21 @@ const game = {
         wrongOne = game.question.wrongAnswer1;
         wrongTwo = game.question.wrongAnswer2;
         wrongThree = game.question.wrongAnswer3;
+        let questionOrder = ['one', 'two', 'three', 'four']
+
         $('#show-number').text(`Time remaining: 20`)
         $(`#startCon`).addClass('hidden');
         $(`.show`).removeClass('hidden');
         $(`#question`).text(`${game.question.question}`);
-        $(`#one`).text(`${wrongOne}`);
-        $(`#two`).text(`${game.correctAnswer}`);
-        $(`#three`).text(`${wrongTwo}`);
-        $(`#four`).text(`${wrongThree}`);
+
+
+        game.shuffleArray(questionOrder);
+        console.log(questionOrder);
+
+        $(`#${questionOrder[0]}`).text(`${wrongOne}`);
+        $(`#${questionOrder[1]}`).text(`${game.correctAnswer}`);
+        $(`#${questionOrder[2]}`).text(`${wrongTwo}`);
+        $(`#${questionOrder[3]}`).text(`${wrongThree}`);
     },
 
     start: function () {
@@ -206,7 +213,7 @@ const game = {
 }
 
 $(document).ready(function () {
-    game.shuffleQuestions(game.questions);
+    game.shuffleArray(game.questions);
 });
 
 $("#stop").on("click", game.stop);
