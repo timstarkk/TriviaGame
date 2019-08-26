@@ -34,7 +34,6 @@ body {
 
 #start {
     margin-top: 20px;
-    width:200px;
 }
 
 .main {
@@ -81,7 +80,7 @@ body {
     background: #2870c9;
     border-color: #2870c9;
     height: 50px;
-    width: 200px;
+    width: 20vw;
 }
 
 .btn-primary:hover{
