@@ -125,18 +125,20 @@ const game = {
         $("#show-number").html(`Time remaining: ${game.number}s`);
 
         if (game.number === 0) {
-            $('#question').text('Out of Time!');
+            $('#question').html('Out of Time!');
             game.unanswered++;
             game.questions.shift();
             if (game.questions.length > 0) {
                 $('.answerButton').addClass('hidden');
-                $('#question').addClass('hidden');
+                $('#question').append(`<br>The Correct Answer was ${game.correctAnswer}`);
+                $('#show-number').html(`<img src="assets/images/loseGif.gif" alt="Steve Jobs" class="gifSize">`);
                 game.reloadNumber = 4;
                 game.stop();
                 game.startTimer();
             } else {
                 $('.answerButton').addClass('hidden');
-                $('#question').addClass('hidden');
+                $('#question').append(`<br>The Correct Answer was ${game.correctAnswer}`);
+                $('#show-number').html(`<img src="assets/images/loseGif.gif" alt="Steve Jobs" class="gifSize">`);
                 game.reloadNumber = 4;
                 game.stop();
                 game.startTimer();
@@ -200,8 +202,8 @@ const game = {
                     game.stop();
                     game.startTimer();
                 } else {
-                    $('#question').append(`<br>The Correct Answer was ${game.correctAnswer}`);
                     $('.answerButton').addClass('hidden');
+                    $('#question').append(`<br>The Correct Answer was ${game.correctAnswer}`);
                     $('#show-number').html(`<img src="assets/images/loseGif.gif" alt="Steve Jobs" class="gifSize">`);
                     game.reloadNumber = 3;
                     game.stop();
